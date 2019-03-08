@@ -1,5 +1,5 @@
 <?php
-$q = "SELECT * FROM `uzytkownicy` WHERE `email`='{$_SESSION['email']}'";
+$q = "SELECT * FROM `users` WHERE `email`='{$_SESSION['email']}'";
 $result = mysqli_query($db, $q);
 $user_c = mysqli_fetch_assoc($result);
 $today = getdate();
@@ -10,7 +10,7 @@ if(isset($_POST['submit_r'])):
     $phone = mysqli_real_escape_string($db, $_POST['user_phone']);
     $city = mysqli_real_escape_string($db, $_POST['user_city']);
 
-	$query = "UPDATE `uzytkownicy` SET `name` ='{$username}', `surname` = '{$surname}',`email`='{$email}',`city` = '{$city}',`phone` = '{$phone}' WHERE `id`= {$user_c['id']}  ;";
+	$query = "UPDATE `users` SET `name` ='{$username}', `surname` = '{$surname}',`email`='{$email}',`city` = '{$city}',`phone` = '{$phone}' WHERE `id`= {$user_c['id']}  ;";
 //    $query = "INSERT INTO `uzytkownicy` (`id`, `name`, `surname`, `email`, `city`, `phone`, 'state`, `gender`)
 //                VALUES (NULL, '".$username."', '".$surname."', '".$email."','".$city."', '".$phone."', '".$_POST['state']."', '".$gender."');";
     if(mysqli_query($db, $query)):
@@ -27,7 +27,7 @@ if(isset($_POST['submit_rez'])):
 	$kort_number = $_POST['number_kort'];
 	$czas = $_POST['time'];
 	$select_date_rez= $today['year']."-".$today['mon']."-".$_POST['day_k'];
-	$query1 = "SELECT * FROM `rezerwacje` WHERE `kort` ={$kort_number} AND `date` = DATE_FORMAT('1999-01-01', '$select_date_rez') and  `czas` = {$czas} LIMIT 1; "; 
+	$query1 = "SELECT * FROM `rezerwacje` WHERE `kort` ={$kort_number} AND `date` = DATE_FORMAT('1999-01-01', '$select_date_rez') and  `czas` = {$czas} LIMIT 1; ";
 	$results= mysqli_query($db, $query1);
 	if (mysqli_num_rows($results) > 0) {
 	echo "rezerwacja istnieje";
@@ -82,8 +82,8 @@ endif;
 </div>
 
 <div id="actual_courts">
-<?php 
-if(isset($_POST['submit_t'])):   
+<?php
+if(isset($_POST['submit_t'])):
     $select_date= $today['year']."-".$today['mon']."-".$_POST['day'];
     $query = "SELECT * FROM `rezerwacje` WHERE `date` = DATE_FORMAT('1999-01-01', '$select_date') ORDER BY `rezerwacje`.`kort` ASC";
 	$result_t = mysqli_query($db, $query);
@@ -113,8 +113,8 @@ endif;
         <th>17</th>
         <th>18</th>
     </tr>
-	
-    
+
+
 
 </table> -->
 <form action="<?=$_SERVER['PHP_SELF']?>" method="post" class="booking_form">
@@ -146,7 +146,7 @@ endif;
 </form>
 
 <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
-	<input type="submit" id="my_reservations" name="submit_mrez" value="moje rezerwacje" 
+	<input type="submit" id="my_reservations" name="submit_mrez" value="moje rezerwacje"
     style="position: absolute; left: 1050px; bottom: 300px;">
 </form>
 
@@ -162,7 +162,7 @@ if(isset($_POST['submit_mrez'])){
 	if($result_moj){
 		while ($row1 = mysqli_fetch_assoc($result_moj)){
 			echo "nr rezerwacji: {$row1['id']}; nr kortu: {$row1['kort']}; godzina rezerwacji: {$row1['czas']}; data: {$row1['date']};<br/>";
-		} 
+		}
 	}
 	else{
 		echo "Nie ma rezerw<br/>";

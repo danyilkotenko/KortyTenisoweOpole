@@ -11,9 +11,9 @@ if(isset($_POST['reg_user'])):
     $city = mysqli_real_escape_string($db, $_POST['city']);
     $password = md5($password_1);
 
-    $query = "INSERT INTO `uzytkownicy` ('name', 'email', 'password', 'surname', 'state', 'city', 'phone' ) 
+    $query = "INSERT INTO `users` ('name', 'email', 'password', 'surname', 'state', 'city', 'phone' )
   			  VALUES('{$username}', '{$email}', '{$password}', '{$surname}', '3','{$city}', '{$phone}');";
-        $query = "INSERT INTO `uzytkownicy` (`id`, `name`, `surname`, `email`, `password`, `city`, `phone`, `state`) 
+        $query = "INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`, `city`, `phone`, `state`)
             VALUES (NULL, '".$username."', '".$surname."', '".$email."', '".$password."', '".$city."', '".$phone."', '3');";
         if(mysqli_query($db, $query)){
 		echo "Welcome";
@@ -48,7 +48,7 @@ endif;
         <div id="main_info3">
             <div id="register_inf">
                 <form id="register_form" method="post" action="registration.php">
-				
+
                     <h4 id="konto"><i class="fa fa-address-book" style="font-size: 20px;"></i> Załóż konto</h4>
                     <span class="text_for_input">adres email</span><input type="text" id="email" name="email">
                     <br>
